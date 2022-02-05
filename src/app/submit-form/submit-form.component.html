@@ -1,3 +1,23 @@
-<form>
-    <p>TEST</p>
+<form [formGroup]="myForm" [hidden]="success" (ngSubmit)="submitHandler()">
+    Value: {{myForm.value | json}}
+
+    <mat-form-field>
+        <input matInput formControlName="email" placeholder="email">
+        <mat-error *ngIf="email.touched && email.invalid">
+            Please supply and accurate email
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <textarea matInput formControlName="message" cols="30" rows="10"></textarea>
+        <mat-error *ngIf="message.touched">
+            Please supply a message
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button [disabled]="myForm.invalid" type="submit" color="primary">
+        Submit
+    </button>
+
+    <div *ngIf="success">Submission successfully sent</div>
 </form>
