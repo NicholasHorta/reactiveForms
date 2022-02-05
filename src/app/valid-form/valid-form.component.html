@@ -1,0 +1,18 @@
+<form [formGroup]="myForm">
+    <br><br><br>
+    Value: {{myForm.value | json}}
+    <br><br><br>
+    <mat-form-field>
+        <input matInput placeholder="email" formControlName="email">
+        <mat-error *ngIf="email.invalid">
+            Email has an issue 
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Password" formControlName="password">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Age" formControlName="age">
+    </mat-form-field>
+
+</form>
