@@ -14,27 +14,22 @@ export class ValidFormComponent implements OnInit {
   ngOnInit(): void {
     this.myForm = this.fb.group({
       email: ['',
-        Validators.required,
-        Validators.email
+        [Validators.required, Validators.email]
       ],
       password: ['',
-        Validators.required,
-        // at least one letter and one number in the pw string
-        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')
+        [Validators.required, Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]
       ],
       age: [null,
-        Validators.required,
-        Validators.minLength(2),
-        Validators.min(18),
-        Validators.max(65)
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.min(18),
+          Validators.max(65)
+        ]
       ],
-      agree: [false, Validators.requiredTrue]
+      agree: [false, [Validators.requiredTrue]]
     })
   }
-
-
-  // PRO TIP! Setup GETTERS for the various fields in your form - This will make your HTML way cleaner 
-  //          as you're setting up logic to show different error messages for different fields
 
   get email() {
     return this.myForm.get('email');
@@ -49,7 +44,11 @@ export class ValidFormComponent implements OnInit {
     return this.myForm.get('agree');
   }
 
-
-
+  get ageErrors(){
+    const ageErrCheck = this.myForm.get('age').errors?.min || this.myForm.get('age').errors?.max
+    const ageErrStat = this.myForm.get('age').errors?.min?.min || this.myForm.get('age').errors?.max?.max
+    console.log(ageErrCheck, ageErrStat);
+    return {check: ageErrCheck, value: ageErrStat}
+  }
 
 }

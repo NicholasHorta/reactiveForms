@@ -4,15 +4,34 @@
     <br><br><br>
     <mat-form-field>
         <input matInput placeholder="email" formControlName="email">
-        <mat-error *ngIf="email.invalid">
+        <mat-error *ngIf="email.invalid && email.touched">
             Email has an issue 
         </mat-error>
     </mat-form-field>
     <mat-form-field>
         <input matInput placeholder="Password" formControlName="password">
+        <mat-hint align="end">
+            Must have one letter and one number
+        </mat-hint>
+        <mat-error *ngIf="password.invalid && password.touched">
+            That password sucks
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
-        <input matInput placeholder="Age" formControlName="age">
+        <input matInput placeholder="Age" formControlName="age" value="0">
+        <!-- <mat-error *ngIf="age.errors?.min && age.touched">
+            Go play with your legos
+        </mat-error>
+        <mat-error *ngIf="age.errors?.max && age.touched">
+            Get lost old timer
+        </mat-error> -->
+        <mat-error *ngIf="ageErrors.check">
+            Service is not available for those {{age.value < ageErrors.check.min ? 'younger' : 'older'}} than {{ageErrors.value}}
+        </mat-error>
     </mat-form-field>
 
+    <label for="agree-check">AGREE</label>
+    <hr>
+    <mat-checkbox formControlName="agree" name="agree-check" color="primary">Are you sure?</mat-checkbox>
+    <button [disabled]="myForm.invalid" color="primary">Submit</button>
 </form>
